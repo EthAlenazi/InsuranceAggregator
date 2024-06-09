@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InsuranceAggregator.Migrations
 {
     [DbContext(typeof(InsuranceAggregatorsContext))]
-    [Migration("20240608191358_data")]
-    partial class data
+    [Migration("20240609075457_Data")]
+    partial class Data
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

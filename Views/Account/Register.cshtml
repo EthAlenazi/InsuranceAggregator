@@ -1,17 +1,33 @@
 ﻿@model InsuranceAggregator.Models.RegisterModel
 
+@{
+    ViewData["Title"] = "Register";
+}
+
 <h2>Register</h2>
 
-<form asp-action="Register">
+<form asp-action="Register" method="post">
     <div class="form-group">
-        <label asp-for="Email"></label>
-        <input asp-for="Email" class="form-control" />
+        <label asp-for="Email" class="control-label">Email:</label>
+        Model.<input asp-for="" class="form-control" />
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Password"></label>
+        <label asp-for="Password" class="control-label">Password:</label>
         <input asp-for="Password" class="form-control" />
         <span asp-validation-for="Password" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Register</button>
+    <div class="form-group">
+        <label asp-for="ConfirmPassword" class="control-label">Confirm Password:</label>
+        <input asp-for="ConfirmPassword" class="form-control" />
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+<p class="d-inline">You have an account! Please login now</p>
+<a class="d-inline nav-link" href="/Account/Login">Login</a>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

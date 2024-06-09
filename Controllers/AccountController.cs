@@ -20,13 +20,13 @@ namespace UserAuthApp.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-            return View();
+            return View(new RegisterModel());
         }
 
         [HttpPost]
         public async Task<IActionResult> Register(RegisterModel model)
         {
-            if (ModelState.IsValid)
+            if (!string.IsNullOrEmpty(model.Email)&&model.Email.Equals(model.ConfirmPassword))
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
@@ -49,6 +49,8 @@ namespace UserAuthApp.Controllers
         [HttpGet]
         public IActionResult Login()
         {
+            var item = "title";
+            ViewBag.Title = item;
             return View();
         }
 

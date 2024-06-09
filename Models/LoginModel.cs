@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace InsuranceAggregator.Models
 {
-    public class LoginModel : IdentityUser
+    public class LoginModel 
     {
         [Key]
         [Required]
