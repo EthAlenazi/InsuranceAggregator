@@ -1,0 +1,31 @@
+﻿@model AccountViweModel
+<h1>tnhank you for @Model.Title</h1>
+
+<h2> @Model.errorMessage</h2>
+@if (Model.ErrorCode == 1)
+{
+    if (Model.Title.Equals("Login"))
+    {
+        <p class="d-inline">
+            You have an account! Please login now
+            <a class="btn btn-link btn-group-lg" asp-controller="Policies" asp-action="GetPolicy">to start getting policies, click here!</a>
+        </p>
+        <p class="d-inline">
+            <a class="btn btn-link btn-group-lg" asp-controller="Home" asp-action="Index">To logout, click here!</a>
+        </p>
+    }
+    else if (Model.Title.Equals("Register"))
+    {
+        <p class="d-inline">
+            Registration was successful!
+            <a class="btn btn-link btn-sm" asp-controller="Account" asp-action="Login"> Login</a>
+        </p>
+    }
+}
+else if (Model.ErrorCode == 2)
+{
+    <p class="d-inline">
+       Not valid Please try again!
+       @Model.errorMessage
+    </p>
+}

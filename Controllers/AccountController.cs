@@ -26,7 +26,9 @@ namespace UserAuthApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterModel model)
         {
-            if (!string.IsNullOrEmpty(model.Email)&&model.Email.Equals(model.ConfirmPassword))
+            var output = new ErrorModel();
+            output.Title = "Register";
+            if (!string.IsNullOrEmpty(model.Email)&&model.Password.Equals(model.ConfirmPassword))
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
@@ -34,16 +36,24 @@ namespace UserAuthApp.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
+                    output.ErrorMessage = "Registration Complete";
+                    output.ErrorCode = 1;
+                    return RedirectToAction("Responce",output);
                 }
+                var count = result.Errors.Count();
 
+               if (count > 1) { 
                 foreach (var error in result.Errors)
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
-            }
+                    output.ErrorMessage =   error.Description;
+                    output.ErrorCode = 2;
+                    return RedirectToAction("Responce", output);
 
-            return View(model);
+                }
+                }   
+            }
+            output.ErrorCode = 2;
+            return RedirectToAction("Responce", output);
         }
 
         [HttpGet]
@@ -52,6 +62,11 @@ namespace UserAuthApp.Controllers
             var item = "title";
             ViewBag.Title = item;
             return View();
+        }
+        public IActionResult Responce(ErrorModel response)
+        {
+            var Data = new AccountViweModel(response.Title, response.ErrorMessage, response.ErrorCode);           
+            return View("Responce");
         }
 
         [HttpPost]
